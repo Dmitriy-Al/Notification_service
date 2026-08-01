@@ -1,0 +1,35 @@
+# В предыдущих проектах настройки располагал в application.properties, но вроде бы это уже не модно
+spring:
+  application:
+    name: notification_service
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: notification-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "*"
+        spring.json.value.default.type: ru.alimovdev.notification_service.api.UserEvent
+
+  mail:
+    host: smtp.yandex.ru
+    port: 465
+    username: flexo@yandex.ru
+    password: 123
+    protocol: smtps
+    properties:
+      mail:
+        smtp:
+          auth: true
+          ssl:
+            enable: true
+            trust: smtp.yandex.ru
+          starttls:
+            enable: false
+        debug: true
+
+server:
+  port: 8082
+

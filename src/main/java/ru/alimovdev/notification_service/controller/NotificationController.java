@@ -16,12 +16,6 @@ public class NotificationController {
     @Autowired
     private EmailService emailService;
 
-    /**
-     * Обрабатывает POST-запрос на /api/notifications/send-email.
-     * Ожидает JSON-объект с полями: email, subject, text.
-     * @param request – DTO с данными письма
-     * @return строковое подтверждение
-     */
     @PostMapping("/send-email")
     public String sendEmail(@RequestBody EmailRequest request) {
         // Передаём данные из запроса в сервис отправки

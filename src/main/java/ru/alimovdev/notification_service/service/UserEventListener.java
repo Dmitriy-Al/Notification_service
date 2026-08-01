@@ -1,6 +1,5 @@
 package ru.alimovdev.notification_service.service;
 
-import lombok.extern.flogger.Flogger;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -40,7 +39,6 @@ public class UserEventListener {
         } else {
             return;
         }
-
         // Отправка письма через EmailService
         emailService.sendEmail(email, subject, text);
     }

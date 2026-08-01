@@ -10,6 +10,7 @@ import ru.alimovdev.notification_service.config.Config;
 @Slf4j
 @Service
 public class EmailService {
+
     // JavaMailSender - интерфейс из Spring Framework, абстрагирует работу с JavaMail API
     @Autowired
     private JavaMailSender mailSender; // бин для отправки писем
@@ -21,9 +22,9 @@ public class EmailService {
         // Он включает такие поля, как «от», «кому», «cc», «тема» и текст.
         SimpleMailMessage message = new SimpleMailMessage();
 
-        // Устанавливаем отправителя – берём из конфигурации (spring.mail.username)
+        // Добавление отправителя
         message.setFrom(config.mailUsername);
-        // Устанавливаем получателя
+        // Добавление получателя
         message.setTo(to);
         // Тема
         message.setSubject(subject);

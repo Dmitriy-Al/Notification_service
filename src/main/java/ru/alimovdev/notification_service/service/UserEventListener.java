@@ -11,32 +11,34 @@ import static ru.alimovdev.notification_service.api.Event.*;
 @Component
 public class UserEventListener {
 
-    @Autowired
-    private EmailService emailService;
+    private final EmailService emailService;
 
-    /*
-    @KafkaListener - добавляется к методу, который содержит логику обработки сообщения и Spring автоматически
-    настраивает инфраструктуру, чтобы этот метод вызывался при появлении сообщения в Kafka
+    @Autowired
+    public UserEventListener(EmailService emailService) {
+        this.emailService = emailService;
+    }
+
+    /*   @KafkaListener - добавляется к методу, который содержит логику обработки сообщения и Spring
+    автоматически настраивает инфраструктуру, чтобы этот метод вызывался при появлении сообщения в Kafka
     handleUserEvent() - метод-обработчик сообщений из Kafka, автоматически вызывается при поступлении нового
-    сообщения в топик "user-events".
-     */
+    сообщения в топик "user-events".  */
     @KafkaListener(topics = "user-events", groupId = "notification-group")
     public void handleUserEvent(UserEvent event) {
         // email и тип операции из события
         String email = event.getEmail();
         String operation = event.getOperation();
-
         String subject;
         String text;
 
         // В зависимости от операции формируется тема и текст письма
         if (CREATE.getEvent().equals(operation)) {
             subject = "Аккаунт создан";
-            text = "Здравствуйте! Ваш аккаунт на сайте был успешно создан \uD83E\uDD17.";
+            text = "Здравствуйте! Ваш аккаунт на сайте alimovdev.ru был успешно создан.";
         } else if (DELETE.getEvent().equals(operation)) {
             subject = "Аккаунт удалён";
-            text = "Здравствуйте! Ваш аккаунт был удалён \uD83D\uDE27.";
+            text = "Здравствуйте! Ваш аккаунт был удалён.";
         } else {
+            log.error("Incorrect event value: " + operation);
             return;
         }
         // Отправка письма через EmailService

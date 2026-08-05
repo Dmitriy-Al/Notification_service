@@ -10,14 +10,15 @@ spring:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
-        spring.json.trusted.packages: "*"
+        spring.json.trusted.packages: ru.alimovdev.notification_service.api
         spring.json.value.default.type: ru.alimovdev.notification_service.api.UserEvent
 
   mail:
+    username: ${MAIL_USERNAME:}   # если переменная не задана, будет пустая строка
+    password: ${MAIL_PASSWORD:}
+
     host: smtp.yandex.ru
     port: 465
-    username: flexo@yandex.ru
-    password: 123
     protocol: smtps
     properties:
       mail:

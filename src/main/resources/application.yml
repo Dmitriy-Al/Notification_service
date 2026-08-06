@@ -14,9 +14,8 @@ spring:
         spring.json.value.default.type: ru.alimovdev.notification_service.api.UserEvent
 
   mail:
-    username: ${MAIL_USERNAME:}   # если переменная не задана, будет пустая строка
+    username: ${MAIL_USERNAME:}
     password: ${MAIL_PASSWORD:}
-
     host: smtp.yandex.ru
     port: 465
     protocol: smtps
@@ -31,6 +30,9 @@ spring:
             enable: false
         debug: true
 
+  authorization:
+    auth-username: ${AUTH_USERNAME:admin}
+    auth-password: ${AUTH_PASSWORD:111}
+
 server:
   port: 8082
-

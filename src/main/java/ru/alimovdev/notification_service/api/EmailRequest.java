@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 public class EmailRequest {
 
-    // Валидацию решил сделать через аннотаций, как наиболее органичный способ для Spring
+    // Валидацию через аннотации, как наиболее органичный способ для Spring
     @NotBlank(message = "Email не может быть пустым")
     @Email(message = "Некорректный формат email")
     @Size(max = 50, message = "Email не должен превышать 50 символов")

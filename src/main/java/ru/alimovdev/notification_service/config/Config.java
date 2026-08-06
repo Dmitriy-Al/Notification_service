@@ -12,4 +12,10 @@ public class Config {
     @Value("${spring.mail.username}")
     public String mailUsername;
 
+    @Value("${spring.authorization.auth-username}")
+    public String auth_username;
+
+    @Value("${spring.authorization.auth-password}")
+    public String auth_password;
+
 }

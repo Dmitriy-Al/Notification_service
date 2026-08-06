@@ -19,6 +19,7 @@ public class NotificationController {
     public NotificationController(EmailService emailService) {
         this.emailService = emailService;
     }
+
     @PostMapping("/send-email")
     public String sendEmail(@Valid @RequestBody EmailRequest request) { // @Valid: если данные не валидны, вызывается GlobalExceptionHandler.handleValidateExceptions()
         // Передача данных из запроса в сервис отправки

@@ -1,4 +1,3 @@
-# В предыдущих проектах настройки располагал в application.properties, но вроде бы это уже не модно
 spring:
   application:
     name: notification_service
@@ -14,8 +13,8 @@ spring:
         spring.json.value.default.type: ru.alimovdev.notification_service.api.UserEvent
 
   mail:
-    username: ${MAIL_USERNAME:}
-    password: ${MAIL_PASSWORD:}
+    username: flexo.man@yandex.ru
+    password: hpnquhzbjkciweaf
     host: smtp.yandex.ru
     port: 465
     protocol: smtps

@@ -7,6 +7,11 @@ import org.springframework.stereotype.Component;
 import ru.alimovdev.notification_service.api.UserEvent;
 import static ru.alimovdev.notification_service.api.Event.*;
 
+/**
+ * Компонент-слушатель сообщений из Kafka.
+ * Подписывается на топик "user-events" и обрабатывает события о создании/удалении пользователя.
+ * При получении события отправляет соответствующее письмо пользователю.
+ */
 @Slf4j
 @Component
 public class UserEventListener {

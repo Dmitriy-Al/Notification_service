@@ -2,36 +2,5 @@ spring:
   application:
     name: notification_service
 
-  kafka:
-    bootstrap-servers: localhost:9092
-    consumer:
-      group-id: notification-group
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
-      properties:
-        spring.json.trusted.packages: ru.alimovdev.notification_service.api
-        spring.json.value.default.type: ru.alimovdev.notification_service.api.UserEvent
-
-  mail:
-    username: ${MAIL_USERNAME}
-    password: ${MAIL_PASSWORD}
-    host: smtp.yandex.ru
-    port: 465
-    protocol: smtps
-    properties:
-      mail:
-        smtp:
-          auth: true
-          ssl:
-            enable: true
-            trust: smtp.yandex.ru
-          starttls:
-            enable: false
-        debug: true
-
-  authorization:
-    auth-username: ${AUTH_USERNAME}
-    auth-password: ${AUTH_PASSWORD}
-
-server:
-  port: 8082
+  config:
+    import: "optional:configserver:http://localhost:8888" # Подключение к Config Server, optional - при недоступности config

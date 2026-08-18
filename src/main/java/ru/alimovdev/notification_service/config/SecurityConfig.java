@@ -84,3 +84,41 @@ public class SecurityConfig {
 
 }
 
+/**
+BasicAuthenticationFilter — это специальный фильтр, встроенный в Spring Security. Он:
+Извлекает логин и пароль из заголовка Authorization.
+Проверяет их через AuthenticationManager.
+Если логин/пароль не совпадают с теми, что заданы в UserDetailsService, фильтр отклоняет запрос
+и возвращает клиенту статус 401 Unauthorized, даже не вызывая контроллер.
+Только если аутентификация прошла успешно, Spring Security создаёт аутентифицированный контекст
+(SecurityContext), помещает его в SecurityContextHolder и передаёт запрос дальше по цепочке — в ваш контроллер.
+Что происходит в контроллере:
+К моменту, когда запрос достигает метода sendEmail, он уже прошёл аутентификацию. В коде контроллера вы ничего
+не проверяете — вся логика авторизации выполнена фильтрами.
+Однако вы можете получить информацию о пользователе, если она вам нужна:
+
+@PostMapping("/send-email")
+public String sendEmail(@Valid @RequestBody EmailRequest request,
+                        Authentication authentication) {
+    // authentication.getName() — логин пользователя
+    // authentication.getAuthorities() — его роли
+    // Вы можете использовать эти данные, например, для логирования
+    System.out.println("Запрос от пользователя: " + authentication.getName());
+
+    emailService.sendEmail(...);
+    return "Email sent";
+}
+Либо через SecurityContextHolder:
+
+Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+String username = auth.getName();
+Но для вашего приложения это не обязательно.
+Почему контроллер "не знает" о клиенте
+В обычных условиях контроллеру не нужно знать, кто отправил запрос — это задача уровня безопасности.
+Spring Security абстрагирует этот механизм и позволяет контроллеру фокусироваться на бизнес-логике.
+Если запрос неавторизован, он даже не дойдёт до контроллера — клиент получит 401 Unauthorized от фильтра.
+Если авторизован — контроллер отработает как обычно.
+Авторизация: определяет Spring Security до контроллера.
+Контроллер: получает запрос только после успешной аутентификации.
+Если вы хотите знать, кто отправил запрос, можно получить объект Authentication в методе контроллера.
+ */

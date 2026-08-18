@@ -13,8 +13,8 @@ spring:
         spring.json.value.default.type: ru.alimovdev.notification_service.api.UserEvent
 
   mail:
-    username: flexo.man@yandex.ru
-    password: hpnquhzbjkciweaf
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
     host: smtp.yandex.ru
     port: 465
     protocol: smtps
@@ -30,8 +30,8 @@ spring:
         debug: true
 
   authorization:
-    auth-username: ${AUTH_USERNAME:admin}
-    auth-password: ${AUTH_PASSWORD:111}
+    auth-username: ${AUTH_USERNAME}
+    auth-password: ${AUTH_PASSWORD}
 
 server:
   port: 8082

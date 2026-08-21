@@ -1,4 +1,4 @@
-package ru.alimovdev.notification_service.controller;
+package ru.alimovdev.notification_service;
 
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;

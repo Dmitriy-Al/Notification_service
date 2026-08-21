@@ -1,34 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <property name="HOME_LOG" value="C:/notification_service_logs/notification_service.log"/>
 
-    <appender name="FILE-ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${HOME_LOG}</file>
-
-        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-
-            <fileNamePattern>C:\Collect.bot.log\app.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern> <!--  -->
-            <!-- each archived file, size max 10MB -->
-            <maxFileSize>10MB</maxFileSize>
-            <!-- total size of all archive files, if total size > 20GB, it will delete old archived file -->
-            <totalSizeCap>100MB</totalSizeCap>
-            <!-- 60 days to keep -->
-            <maxHistory>60</maxHistory>
-        </rollingPolicy>
-
+    <!-- Appender для консоли (вывод в stdout) -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%d %p %c{1} [%t] %m%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
 
-    <logger name="com.dev.mproject" level="debug" additivity="false">
+    <!-- Appender для файла (оставьте, если нужен) -->
+    <appender name="FILE-ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/app.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/app.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Логи для вашего пакета (можно оставить DEBUG) -->
+    <logger name="ru.alimovdev" level="debug" additivity="false">
+        <appender-ref ref="CONSOLE"/>
         <appender-ref ref="FILE-ROLLING"/>
     </logger>
 
-    <root level="error">
+    <!-- Логи для актуатора и Spring Web (чтобы видеть запросы к /actuator/health) -->
+    <logger name="org.springframework.boot.actuate" level="debug" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+    <logger name="org.springframework.web" level="debug" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+
+    <!-- Корневой уровень – теперь только один, пишем INFO в консоль и файл -->
+    <root level="info">
+        <appender-ref ref="CONSOLE"/>
         <appender-ref ref="FILE-ROLLING"/>
     </root>
 
-    <root level="info">
-        <appender-ref ref="FILE-ROLLING"/>
-    </root>
 </configuration>

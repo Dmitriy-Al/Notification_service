@@ -31,6 +31,8 @@ public class SecurityConfig {
         его методы (authorizeHttpRequests(), httpBasic(), csrf(), formLogin() ...etc), чтобы описать правила защиты
         эндпоинтов. Все эти вызовы не применяются мгновенно, а накапливают конфигурацию во внутреннем строителе.   */
         http.authorizeHttpRequests(auth -> auth
+                        // Разрешение аутентификации в healthchec для отображения статуса в терминале
+                        .requestMatchers("/actuator/health").permitAll()
                         // Разрешение доступа к публичным эндпоинтам (если есть)
                         .requestMatchers("/api/notifications/send-email").authenticated()
                         // Все остальные запросы требуют аутентификации

@@ -1,4 +1,4 @@
-package ru.alimovdev.notification_service.controller;
+package ru.alimovdev.notification_service;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
